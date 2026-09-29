@@ -1,0 +1,21 @@
+services:
+  obsidian-qmd:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8181:8181"
+    environment:
+      QMD_COLLECTION: vault
+      QMD_UPDATE_INTERVAL: 300
+      # Set this only when exposing MCP outside a trusted network.
+      # QMD_ALLOWED_HOSTS: qmd.example.com
+    volumes:
+      - ./vault:/vault
+      - obsidian-state:/data/home
+      - qmd-config:/data/config
+      - qmd-cache:/data/cache
+
+volumes:
+  obsidian-state:
+  qmd-config:
+  qmd-cache:
